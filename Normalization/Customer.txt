@@ -1,0 +1,50 @@
+customer_id,fname,lname,email,customer_address,telephone_no
+
+customer_id,telephone_no,email -> fname,lname,customer_address
+customer_id -> telephone_no,email
+fname,lname -> customer_address
+
+
+Since all attributes are in atomic form it is 1NF.
+Data does not require more than one column to qualify as a unique identifier.
+Thus, it is in 2NF
+
+Canonical Form of the table:
+Step 1: Obtain singleton RHS
+	customer_id,telephone_no,email	->fname   
+	customer_id,telephone_no,email	->lname   
+	customer_id,telephone_no,email	->customer_address   
+	customer_id 			->telephone_no   
+	customer_id      		->email   
+	fname,lname     		->customer_address   
+
+
+Step2: Remove extraneous attributes
+	(customer_id)+ = (customer_id,telephone_no,email,fname,lname,customer_address)
+	(telephone_no)+ = (telephone_no, fname, lname,customer_address)
+	(email)+ = (email,fname,lname,customer_address)
+	telephone_no and email can be removed since customer_id covers both of them.
+Step3: Remove reduntans FDs
+	customer_id -> fname
+	customer_id -> lname
+	customer_id -> customer_address
+	customer_id -> telephone_no
+	customer_id -> email
+	fname,lname -> customer_address	
+
+Step4: Final merged minimal cover:
+	customer_id -> fname,lname,customer_address,telephone_no,email
+	fname,lname -> customer_address
+
+BCNF:
+
+(customer_id)+ = (customer_id,fname,lname,customer_address,telephone_no,email) 
+
+(fname,lname)+ =(fname,lname,customer_address) -> it violates the BCNF. not cover relation entirely
+
+Decomposition:
+	R1= (fname,lname,customer_address)
+	R2=(customer_id,telephone_no, email)
+	R2A=(customer_id,fname,lname,telephone_no,email)
+Final Decomposition:
+	R1 and R2A

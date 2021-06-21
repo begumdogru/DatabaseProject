@@ -1,0 +1,40 @@
+flight_id,flight_date,destination,flight_time,plane_id
+
+flight_id -> plane_id
+flight_id -> flight_date,flight_time,destination
+flight_date -> flight_time
+
+Since all attributes are in atomic form it is 1NF.
+Data does not require more than one column to qualify as a unique identifier. Thus, it is in 2NF
+
+Canonical Form of the table:
+Step 1: Obtain singleton RHS
+	flight_id   ->    plane_id   
+	flight_id   ->    flight_date   
+	flight_id   ->    flight_time   
+	flight_id   ->    destination   
+	flight_date ->    flight_time   
+Step2: Remove extraneous attributes
+	Since left side is singleton,it can't contain any extraneous attribute.
+Step3: Remove reduntans FDs
+	flight_id   ->    plane_id   
+	flight_id   ->    flight_date   
+	flight_id   ->    destination   
+	flight_date ->    flight_time 
+Step4: Final merged minimal cover:
+	flight        ->    plane_id, flight_date, destination
+	flight_date   ->    flight_time 
+
+
+BCNF:
+
+(flight)+ = (flight_id, plane_id, flight_date, destination) 
+
+(flight_date)+ =(flight_date, flight_time) -> it violates the BCNF. because flight_date is
+neither a super key nor a superset thereof.
+
+ identifier = {flight_date}
+
+Decomposition:
+	R1= (flight_date, flight_time)
+	R2=(flight_id,flight_date,plane_id,destination )

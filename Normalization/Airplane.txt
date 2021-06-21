@@ -1,0 +1,5 @@
+plane_id,airport_id
+
+plane_id -> airport_id
+
+This table is already in BCNF form.
